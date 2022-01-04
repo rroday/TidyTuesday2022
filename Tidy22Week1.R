@@ -13,6 +13,8 @@
 ##
 ## Notes: Basic code already created. Most time spent 
 ##        in excel processing data from iPhone notes app
+##        Data file located in folder under "Data"
+##        Data file named "Data2022"
 ##        
 ##
 ## ---------------------------
