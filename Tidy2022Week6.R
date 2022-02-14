@@ -6,7 +6,7 @@
 ##
 ## ---------------------------
 ##
-## Notes: an hour ish. I dont like this graph.
+## Notes: an hour ish. +15 min for WEB DB aesthetics
 ##
 ## ---------------------------
 
@@ -18,7 +18,13 @@ library(dplyr)
 library(ggplot2)
 library(showtext)
 library(geofacet)
-library(cowplot)
+
+## Loading Google fonts (https://fonts.google.com/)
+##  font-family: 'Teko', sans-serif;
+font_add_google("Teko", "teko")
+
+## Automatically use showtext to render text
+showtext_auto()
 
 #Go! Get! Your! Data!
 tuesdata <- tidytuesdayR::tt_load('2022-02-08')
@@ -31,7 +37,8 @@ airmen %>%
          state = ifelse(state == 'VI', 'Other', state),
          state = ifelse(state == 'KN', 'Other', state),
          state = ifelse(state == 'TD', 'Other', state),
-         state = ifelse(state == 'Unk', 'Other', state)) %>%
+         state = ifelse(state == 'Unk', 'Other', state),
+         pilot_type = ifelse(pilot_type =="Liason pilot",'Liaison pilot', pilot_type)) %>%
   subset(state!='Other') %>%
 ggplot(aes(x =pilot_type)) +
   geom_bar() +
@@ -41,16 +48,20 @@ ggplot(aes(x =pilot_type)) +
        caption = "Source: Commemorative Air Force| Viz: @rachel_roday") +
   facet_geo(~ state) +
   coord_flip()+
-  theme(plot.background = element_rect(fill = "#f5ecdf", colour="#f5ecdf"),
-        panel.background = element_rect(fill = "#f5ecdf", colour="#f5ecdf"),
-        legend.background = element_rect(fill = "#f5ecdf", colour="#f5ecdf"),
-        legend.position = "none",
-        plot.title = element_text(colour = 'black', family="bebas", face = "bold", size=30),
-        plot.subtitle = element_text(colour = 'black', family="bebas", size=15),
-        plot.caption = element_text(colour = '#717370', family="bebas", size=15),
-        legend.text = element_text(colour = 'black', family="bebas", size=10), 
-        legend.title = element_text(colour = 'black', family="bebas", size=20),
-        strip.background =element_rect(fill="#f5ecdf"),
-        strip.text = element_text(colour = 'black', family="bebas", size=20),
-        axis.text =  element_text(colour = 'black', family="bebas", size=14),
-        axis.title = element_text(color='black', family= 'bebas', size = 20))
+  theme(text = element_text(family="teko"),
+                panel.background = element_rect(fill = "#e7ccb0",
+                                                colour = "#e7ccb0"),
+        strip.background =element_rect(fill="#e7ccb0"),
+                panel.grid.major = element_line(colour="#dda58c"), 
+                panel.grid.minor = element_blank(),
+                plot.background = element_rect(fill = "#e7ccb0"),
+                panel.border = element_rect(colour="black", fill=NA),
+                legend.position="bottom",
+                plot.title=element_text(size=25, hjust = .5),
+                axis.ticks = element_blank(),
+                legend.background = element_rect(fill = "#e7ccb0"),
+                axis.text.x = element_text(size=8),
+                axis.text.y = element_text(size=13, hjust=.5),
+                axis.title = element_blank(),
+                legend.key = element_rect(fill = "#e7ccb0", color = NA))
+    
